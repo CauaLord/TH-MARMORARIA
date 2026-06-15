@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projetos — TH Marmoraria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ DESIGN TOKENS (mesmos da homepage) ============ */
+:root{
+  --noir:#0b0b0c;
+  --noir-2:#131315;
+  --noir-3:#1a1a1d;
+  --bone:#ecebe6;
+  --bone-2:#e3e1da;
+  --paper:#f6f5f1;
+  --ink:#161616;
+  --ink-soft:#4a4a46;
+  --sage:#5e9d70;
+  --sage-dark:#4d8a5f;
+  --forest:#163620;
+  --forest-2:#1d4a2c;
+  --gold:#b8915f;
+  --white:#f8f7f4;
+  --line-d:rgba(255,255,255,.13);
+  --line-l:rgba(20,20,20,.14);
+  --shadow:0 30px 70px -30px rgba(0,0,0,.55);
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --maxw:1280px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Manrope",system-ui,sans-serif;
+  background:var(--noir);
+  color:var(--white);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  line-height:1.6;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,.serif{font-family:"Playfair Display",serif}
+::selection{background:var(--sage);color:#08120b}
+
+/* film grain overlay */
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;
+  opacity:.045;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,64px)}
+
+/* ============ HEADER (idêntico à homepage) ============ */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  transition:background .5s var(--ease),backdrop-filter .5s,border-color .5s,padding .4s;
+  padding:22px 0;border-bottom:1px solid transparent;
+}
+header.scrolled{
+  background:rgba(11,11,12,.72);backdrop-filter:blur(18px) saturate(1.2);
+  border-bottom:1px solid var(--line-d);padding:14px 0;
+}
+.nav-inner{display:flex;align-items:center;gap:28px;justify-content:space-between}
+.logo{display:flex;flex-direction:column;line-height:.82;flex-shrink:0}
+.logo .th{font-family:"Playfair Display",serif;font-weight:800;font-size:30px;letter-spacing:1px}
+.logo .th b{color:var(--sage)}
+.logo .th i{
+  font-style:normal;
+  background:linear-gradient(135deg,#fff 0%,#cfcfcf 35%,#8f8f8f 55%,#efefef 80%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.logo .sub{font-size:9.5px;letter-spacing:5px;font-weight:500;color:#cfcdc6;margin-top:5px;padding-left:2px}
+
+nav.menu{display:flex;gap:30px;align-items:center}
+nav.menu a{font-size:14.5px;font-weight:500;color:#dededa;position:relative;padding:4px 0;letter-spacing:.2px}
+nav.menu a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1.5px;background:var(--sage);transition:width .35s var(--ease)}
+nav.menu a:hover{color:#fff}
+nav.menu a:hover::after{width:100%}
+nav.menu a.active{color:var(--sage)}
+nav.menu a.active::after{width:100%}
+
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
+.burger span{width:26px;height:2px;background:#fff;transition:.3s}
+
+/* ============ HERO BANNER ============ */
+.proj-hero{
+  position:relative;min-height:62vh;display:flex;align-items:center;
+  /* DROP-IN: substitua pelo url('cozinha-escura.jpg') */
+  background:
+    radial-gradient(100% 80% at 70% 40%, rgba(50,46,40,.5) 0%, transparent 50%),
+    radial-gradient(60% 50% at 80% 70%, rgba(94,157,112,.06) 0%, transparent 55%),
+    linear-gradient(180deg,#070708 0%,#0e0e10 45%,#0a0a0b 100%);
+  background-size:cover;background-position:center;
+  overflow:hidden;
+}
+.proj-hero::before{ /* vignette + fade à esquerda para legibilidade */
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.45) 38%,rgba(0,0,0,.05) 70%),
+    linear-gradient(180deg,rgba(0,0,0,.35),transparent 30%,transparent 65%,rgba(11,11,12,.9));
+  pointer-events:none;
+}
+.proj-hero::after{ /* silhueta de ilha em mármore escuro à direita */
+  content:"";position:absolute;right:-4%;bottom:-8%;width:62%;height:72%;
+  background:
+    linear-gradient(110deg,rgba(18,18,20,.0),rgba(26,25,23,.65)),
+    radial-gradient(55% 35% at 50% 25%,rgba(184,145,95,.14),transparent 60%);
+  filter:blur(2px);transform:skewX(-6deg);pointer-events:none;
+}
+.proj-hero-content{position:relative;z-index:5;padding-top:90px;padding-left:clamp(24px,6vw,90px);padding-right:20px}
+.proj-hero h1{
+  font-weight:700;font-size:clamp(40px,5.4vw,68px);line-height:1.04;
+  letter-spacing:2px;text-transform:uppercase;
+}
+.proj-hero p.sub{
+  font-family:"Playfair Display",serif;font-size:clamp(17px,1.9vw,22px);font-weight:400;
+  color:#d7d6d0;max-width:520px;margin-top:18px;line-height:1.55;
+}
+
+/* ============ CHIPS DE CATEGORIA ============ */
+.chips-band{background:var(--noir);padding:34px 0 44px;position:relative;z-index:10}
+.chips{display:flex;gap:16px;flex-wrap:wrap}
+.chip{
+  background:var(--paper);color:var(--ink);border:none;cursor:pointer;
+  font-family:inherit;font-weight:700;font-size:14.5px;letter-spacing:.2px;
+  padding:13px 26px;border-radius:40px;transition:.35s var(--ease);
+  box-shadow:0 12px 28px -18px rgba(0,0,0,.8);
+}
+.chip:hover{background:#fff;transform:translateY(-2px)}
+.chip.active{background:var(--sage);color:#08120b}
+
+/* ============ GALERIA ============ */
+.gallery-sec{background:var(--paper);color:var(--ink);padding:clamp(60px,8vw,100px) 0 clamp(70px,9vw,110px);min-height:60vh}
+.results-info{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  margin-bottom:38px;
+}
+.results-info .count{font-size:14px;color:var(--ink-soft);font-weight:600;letter-spacing:.3px}
+.results-info .count b{color:var(--forest)}
+
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.shot{
+  position:relative;border-radius:6px;overflow:hidden;cursor:pointer;
+  aspect-ratio:4/3.4;
+  box-shadow:0 18px 40px -28px rgba(0,0,0,.4);
+  transition:.5s var(--ease);
+}
+.shot:hover{transform:translateY(-8px);box-shadow:0 40px 60px -28px rgba(0,0,0,.45)}
+.shot.hidden{display:none}
+.shot-img{position:absolute;inset:0;transition:transform 1s var(--ease)}
+.shot:hover .shot-img{transform:scale(1.06)}
+.shot::after{ /* gradiente para legibilidade do label */
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.55) 100%);
+  opacity:0;transition:opacity .5s var(--ease);
+}
+.shot:hover::after{opacity:1}
+.shot .info{
+  position:absolute;left:22px;right:22px;bottom:18px;z-index:3;
+  transform:translateY(10px);opacity:0;transition:.5s var(--ease);
+}
+.shot:hover .info{transform:none;opacity:1}
+.shot .info .cat{font-size:10.5px;letter-spacing:3px;font-weight:700;color:var(--sage);text-transform:uppercase}
+.shot .info .name{font-family:"Playfair Display",serif;font-size:20px;font-weight:600;color:#fff;margin-top:3px;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.shot .hint{position:absolute;top:14px;right:14px;z-index:3;font-size:9.5px;letter-spacing:2px;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.3);padding:5px 9px;border-radius:4px;backdrop-filter:blur(4px)}
+
+/* === Fotos placeholder geradas em CSS (trocar por url('foto.jpg') em cada .shot-img) === */
+.ph-gourmet-claro{background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(0,0,0,.18)),linear-gradient(135deg,#e9e5dc 0%,#d4cec0 45%,#b6ad9c 100%)}
+.ph-banheiro-nero{background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.3)),linear-gradient(125deg,#16161a 0%,#3a3a40 30%,#e8e4dc 55%,#caa86a 80%,#1d1d22 100%)}
+.ph-cozinha-rustica{background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.25)),linear-gradient(135deg,#c4a987 0%,#8f6f4d 40%,#3c3c40 75%,#23232a 100%)}
+.ph-banheiro-calacatta{background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(0,0,0,.2)),linear-gradient(130deg,#eceae6 0%,#cfccc6 40%,#b9a26e 70%,#dad7d0 100%)}
+.ph-escada-travertino{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(0,0,0,.22)),linear-gradient(160deg,#e3d4b6 0%,#cdbb94 35%,#b29f76 70%,#d9cca9 100%)}
+.ph-cozinha-mesa{background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(0,0,0,.2)),linear-gradient(135deg,#f0eeea 0%,#d8d4cc 40%,#9aa07e 75%,#e6e2da 100%)}
+.ph-banheiro-dourado{background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(0,0,0,.18)),linear-gradient(140deg,#f3ece0 0%,#e2d4bc 45%,#c9a96e 80%,#efe8da 100%)}
+.ph-gourmet-pedra{background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.3)),linear-gradient(135deg,#2c3530 0%,#4b5a50 35%,#1f1f24 65%,#39423c 100%)}
+.ph-cozinha-noir{background:linear-gradient(180deg,rgba(0,0,0,.06),rgba(0,0,0,.28)),linear-gradient(130deg,#1a1a1e 0%,#2e2e34 35%,#dcd8d0 65%,#bdb8ae 80%,#16161a 100%)}
+.ph-comercial-recepcao{background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.26)),linear-gradient(135deg,#24201c 0%,#46403a 35%,#a98e62 65%,#2b2722 100%)}
+.ph-escada-marmore{background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(0,0,0,.2)),linear-gradient(155deg,#efedea 0%,#d6d2ca 40%,#aeaaa0 75%,#e4e0d8 100%)}
+.ph-comercial-balcao{background:linear-gradient(180deg,rgba(0,0,0,.07),rgba(0,0,0,.28)),linear-gradient(135deg,#111114 0%,#34343a 40%,#caa15e 70%,#1c1c20 100%)}
+
+/* ============ VER MAIS ============ */
+.center-btn{text-align:center;margin-top:56px}
+.btn-pill-sage{
+  background:var(--sage);color:#08120b;padding:15px 44px;border-radius:8px;font-weight:600;
+  display:inline-flex;align-items:center;gap:9px;transition:.4s var(--ease);
+  border:none;cursor:pointer;font-family:inherit;font-size:15px;
+}
+.btn-pill-sage:hover{background:var(--forest);color:#fff;transform:translateY(-2px)}
+
+/* empty state */
+.empty{display:none;text-align:center;padding:60px 20px;color:var(--ink-soft)}
+.empty.show{display:block}
+.empty .serif{font-size:26px;color:var(--ink);margin-bottom:8px;font-style:italic}
+
+/* ============ CTA FINAL ============ */
+.cta-final{background:var(--noir);position:relative;text-align:center;padding:clamp(70px,9vw,110px) 0;overflow:hidden}
+.cta-final::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(70% 120% at 50% 0%,rgba(94,157,112,.16),transparent 60%),
+  radial-gradient(50% 80% at 50% 120%,rgba(184,145,95,.1),transparent 60%)}
+.cta-final .inner{position:relative;z-index:2;max-width:720px;margin:0 auto}
+.eyebrow{color:var(--sage);font-size:13px;font-weight:700;letter-spacing:4px;text-transform:uppercase}
+.cta-final .eyebrow{display:block;margin-bottom:18px}
+.cta-final h2{font-weight:700;font-size:clamp(30px,4.4vw,54px);line-height:1.08}
+.cta-final h2 em{font-style:italic;color:var(--sage)}
+.cta-final p{color:#bdbcb6;margin:20px auto 36px;font-size:16.5px;max-width:480px}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;cursor:pointer;border:none;
+  font-family:inherit;font-weight:600;font-size:15px;letter-spacing:.3px;
+  padding:16px 30px;border-radius:8px;transition:.4s var(--ease);
+}
+.btn-primary{background:var(--sage);color:#08120b}
+.btn-primary:hover{background:var(--white);transform:translateY(-2px);box-shadow:0 16px 30px -12px rgba(94,157,112,.6)}
+.btn svg{width:16px;height:16px;transition:transform .4s var(--ease)}
+.btn-primary:hover svg{transform:translateX(4px)}
+
+/* ============ FOOTER (idêntico à homepage) ============ */
+footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 36px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1.1fr 1.1fr;gap:40px}
+.foot-brand .socials{display:flex;gap:12px;margin-bottom:26px}
+.foot-brand .socials a{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.06);border:1px solid var(--line-d);display:grid;place-items:center;color:#cfcdc6;transition:.4s var(--ease)}
+.foot-brand .socials a:hover{background:var(--sage);color:#08120b;border-color:var(--sage)}
+.foot-brand .socials svg{width:16px;height:16px}
+.foot-logo .th{font-family:"Playfair Display",serif;font-weight:800;font-size:46px;letter-spacing:1px;line-height:1}
+.foot-logo .th b{color:var(--sage)}
+.foot-logo .th i{font-style:normal;background:linear-gradient(135deg,#fff,#bdbdbd 50%,#efefef);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.foot-logo .sub{font-size:11px;letter-spacing:6px;color:#cfcdc6;margin-top:8px}
+.foot-col h4{font-size:15px;font-weight:700;margin-bottom:20px;color:#fff}
+.foot-col ul{list-style:none}
+.foot-col li{margin-bottom:13px}
+.foot-col a{color:#b1b0aa;font-size:14.5px;transition:.3s}
+.foot-col a:hover{color:var(--sage);padding-left:4px}
+.foot-bottom{margin-top:54px;padding-top:24px;border-top:1px solid var(--line-d);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12.5px;color:#76756f;letter-spacing:.3px}
+.foot-bottom a{color:#76756f}.foot-bottom a:hover{color:#fff}
+
+/* ============ ANIMAÇÕES ============ */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.rise{opacity:0;transform:translateY(34px);animation:rise 1s var(--ease) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.d1{animation-delay:.15s}.d2{animation-delay:.32s}.d3{animation-delay:.5s}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:1080px){
+  nav.menu{gap:20px}
+  .gallery{gap:20px}
+}
+@media(max-width:860px){
+  nav.menu{
+    position:fixed;inset:0 0 0 auto;width:78%;max-width:340px;
+    background:rgba(11,11,12,.97);backdrop-filter:blur(20px);
+    flex-direction:column;justify-content:center;gap:30px;padding:40px;
+    transform:translateX(100%);transition:transform .5s var(--ease);z-index:99;
+    border-left:1px solid var(--line-d);
+  }
+  nav.menu.open{transform:none}
+  nav.menu a{font-size:22px;font-family:"Playfair Display",serif}
+  .burger{display:flex}
+  header.menu-active .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  header.menu-active .burger span:nth-child(2){opacity:0}
+  header.menu-active .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .gallery{grid-template-columns:repeat(2,1fr)}
+  .proj-hero{min-height:52vh}
+  .chips{gap:10px}
+  .chip{padding:11px 20px;font-size:13.5px}
+}
+@media(max-width:540px){
+  .gallery{grid-template-columns:1fr}
+  .shot{aspect-ratio:4/3}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal,.rise{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header id="header">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo" aria-label="TH Marmoraria">
+      <span class="th"><b>T</b><i>H</i></span>
+      <span class="sub">MARMORARIA</span>
+    </a>
+    <nav class="menu" id="menu">
+      <a href="index.html">Início</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="projetos.html" class="active">Projetos</a>
+      <a href="index.html#sobre">Sobre nós</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- ============ HERO BANNER ============ -->
+<section class="proj-hero">
+  <!-- DROP-IN: defina background:url('cozinha-bancada-escura.jpg') no .proj-hero -->
+  <div class="proj-hero-content">
+    <h1 class="rise d1">Projetos</h1>
+    <p class="sub rise d2">Conheça alguns dos nossos projetos.</p>
+  </div>
+</section>
+
+<!-- ============ CHIPS DE CATEGORIA ============ -->
+<div class="chips-band">
+  <div class="wrap">
+    <div class="chips rise d3" id="chips">
+      <button class="chip active" data-cat="" type="button">Todos</button>
+      <button class="chip" data-cat="cozinha" type="button">Cozinhas</button>
+      <button class="chip" data-cat="banheiro" type="button">Banheiros</button>
+      <button class="chip" data-cat="gourmet" type="button">Áreas gourmet</button>
+      <button class="chip" data-cat="comercial" type="button">Projetos Comerciais</button>
+      <button class="chip" data-cat="escada" type="button">Escadas</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ GALERIA ============ -->
+<section class="gallery-sec">
+  <div class="wrap">
+    <div class="results-info">
+      <span class="count" id="count"></span>
+    </div>
+
+    <div class="gallery" id="gallery">
+
+      <!-- Página 1 — DROP-IN: troque o background de cada .shot-img por url('foto.jpg') -->
+      <a href="#" class="shot" data-cat="gourmet">
+        <div class="shot-img ph-gourmet-claro"></div>
+        <span class="hint">FOTO DO PROJETO</span>
+        <div class="info"><div class="cat">Área gourmet</div><div class="name">Ilha em quartzo branco</div></div>
+      </a>
+
+      <a href="#" class="shot" data-cat="banheiro">
+        <div class="shot-img ph-banheiro-nero"></div>
+        <span class="hint">FOTO DO PROJETO</span>
+        <div class="info"><div class="cat">Banheiro</div><div class="name">Nero Marquina &amp; dourado</div></div>
+      </a>
+
+      <a href="#" class="shot" data-cat="cozinha">
+        <div class="shot-img ph-cozinha-rustica"></div>
+        <span class="hint">FOTO DO PROJETO</span>
+        <div class="info"><div class="cat">Cozinha</div><div class="name">Bancada com pedra natural</div></div>
+      </a>
+
+      <a href="#" class="shot" data-cat="banheiro">
+        <div class="shot-img ph-banheiro-calacatta"></div>
+        <span class="hint">FOTO DO PROJETO</span>
+        <div class="info"><div class="cat">Banheiro</div><div class="name">Calacatta com metais dourados</div></div>
+      </a>
+
+      <a href="#" class="shot" data-cat="escada">
+        <div class="shot-img ph-escada-travertino"></div>
+        <span class="hint">FOTO DO PROJETO</span>
+        <div class="info"><div class="cat">Escada</div><div class="name">Degraus em travertino</div></div>
+      </a>
+
+      <a href="#" class="shot" data-cat="cozinha">
+        <div class="shot-img ph-cozinha-mesa"></div>
+        <span class="hint">FOTO DO PROJETO</span>
+        <div class="info"><div class="cat">Cozinha</div><div class="name">Mesa em mármore Calacatta</div></div>
+      </a>
+
+      <a href="#" class="shot" data-cat="banheiro">
+        <div class="shot-img ph-banheiro-dourado"></div>
+        <span class="hint">FOTO DO PROJETO</span>
+        <div class="info"><div class="cat">Banheiro</div><div class="name">Mármore claro &amp; iluminação quente</div></div>
+      </a>
+
+      <a href="#" class="shot" data-cat="gourmet">
+        <div class="shot-img ph-gourmet-pedra"></div>
+        <span class="hint">FOTO DO PROJETO</span>
+        <div class="info"><div class="cat">Área gourmet</div><div class="name">Ilha em granito escuro</div></div>
+      </a>
+
+      <a href="#" class="shot" data-cat="cozinha">
+        <div class="shot-img ph-cozinha-noir"></div>
+        <span class="hint">FOTO DO PROJETO</span>
+        <div class="info"><div class="cat">Cozinha</div><div class="name">Ilha Calacatta em cozinha noir</div></div>
+      </a>
+
+      <!-- Página 2 (revelada no "Ver mais") -->
+      <a href="#" class="shot page2 hidden" data-cat="comercial">
+        <div class="shot-img ph-comercial-recepcao"></div>
+        <span class="hint">FOTO DO PROJETO</span>
+        <div class="info"><div class="cat">Projeto comercial</div><div class="name">Recepção corporativa</div></div>
+      </a>
+
+      <a href="#" class="shot page2 hidden" data-cat="escada">
+        <div class="shot-img ph-escada-marmore"></div>
+        <span class="hint">FOTO DO PROJETO</span>
+        <div class="info"><div class="cat">Escada</div><div class="name">Escada flutuante em mármore</div></div>
+      </a>
+
+      <a href="#" class="shot page2 hidden" data-cat="comercial">
+        <div class="shot-img ph-comercial-balcao"></div>
+        <span class="hint">FOTO DO PROJETO</span>
+        <div class="info"><div class="cat">Projeto comercial</div><div class="name">Balcão de atendimento premium</div></div>
+      </a>
+
+    </div>
+
+    <div class="empty" id="empty">
+      <div class="serif">Nenhum projeto nesta categoria ainda</div>
+      <p>Em breve novos trabalhos — ou fale com a gente e seja o próximo case.</p>
+    </div>
+
+    <div class="center-btn">
+      <button class="btn-pill-sage" id="verMais" type="button">Ver mais</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="cta-final" id="contato">
+  <div class="wrap inner">
+    <span class="eyebrow reveal">Gostou do que viu?</span>
+    <h2 class="reveal">Seu projeto pode ser <em>o próximo.</em></h2>
+    <p class="reveal">Conte sua ideia e receba um orçamento sem compromisso — do corte à instalação final.</p>
+    <a href="#" class="btn btn-primary reveal" style="display:inline-flex">Solicitar orçamento
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="socials">
+          <a href="#" aria-label="Localização"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.3-7-11a7 7 0 1 1 14 0c0 4.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Telefone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5ZM3 9h4v12H3zM10 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V21h-4z"/></svg></a>
+        </div>
+        <div class="foot-logo">
+          <span class="th"><b>T</b><i>H</i></span>
+          <div class="sub">MARMORARIA</div>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Menu</h4>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="projetos.html">Projetos</a></li>
+          <li><a href="index.html#sobre">Sobre nós</a></li>
+          <li><a href="index.html#contato">Contato</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Projetos</h4>
+        <ul>
+          <li><a href="#">Cozinhas</a></li>
+          <li><a href="#">Banheiros</a></li>
+          <li><a href="#">Áreas gourmet</a></li>
+          <li><a href="#">Projetos Comerciais</a></li>
+          <li><a href="#">Escadas</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contatos</h4>
+        <ul>
+          <li><a href="#">WhatsApp — 0000-0000</a></li>
+          <li><a href="#">Telefone — 0000-0000</a></li>
+          <li><a href="#">Endereço</a></li>
+          <li><a href="#">Horários</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2025 TH Marmoraria. Qualidade que transforma.</span>
+      <span>Pedras naturais · Mármores · Granitos · Quartzo</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// header scroll state
+const header=document.getElementById('header');
+addEventListener('scroll',()=>{header.classList.toggle('scrolled',scrollY>40)},{passive:true});
+
+// mobile menu
+const burger=document.getElementById('burger'),menu=document.getElementById('menu');
+burger.addEventListener('click',()=>{menu.classList.toggle('open');header.classList.toggle('menu-active')});
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');header.classList.remove('menu-active')}));
+
+// reveal on scroll
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
+},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ============ FILTRO POR CHIPS + VER MAIS ============ */
+let activeCat='';
+let expanded=false;
+const shots=[...document.querySelectorAll('.shot')];
+const countEl=document.getElementById('count');
+const emptyEl=document.getElementById('empty');
+const verMais=document.getElementById('verMais');
+
+document.querySelectorAll('.chip').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    activeCat=chip.dataset.cat;
+    apply();
+  });
+});
+
+function apply(){
+  const filtering=!!activeCat;
+  let visible=0;
+  shots.forEach(s=>{
+    const match=!activeCat||s.dataset.cat===activeCat;
+    // quando filtrando, ignora a paginação e mostra todos os que batem
+    const pageHidden=!filtering&&!expanded&&s.classList.contains('page2');
+    const show=match&&!pageHidden;
+    s.classList.toggle('hidden',!show);
+    if(show)visible++;
+  });
+  countEl.innerHTML=filtering
+    ?`<b>${visible}</b> projeto${visible!==1?'s':''} encontrado${visible!==1?'s':''}`
+    :`Mostrando <b>${visible}</b> de <b>${shots.length}</b> projetos`;
+  emptyEl.classList.toggle('show',visible===0);
+  verMais.style.display=(filtering||expanded)?'none':'';
+}
+
+verMais.addEventListener('click',()=>{
+  expanded=true;
+  apply();
+  document.querySelector('.page2')?.scrollIntoView({behavior:'smooth',block:'center'});
+});
+
+apply();
+</script>
+</body>
+</html>

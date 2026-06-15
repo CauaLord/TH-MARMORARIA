@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TH Marmoraria — Transformamos pedras em arte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ DESIGN TOKENS ============ */
+:root{
+  --noir:#0b0b0c;
+  --noir-2:#131315;
+  --noir-3:#1a1a1d;
+  --bone:#ecebe6;
+  --bone-2:#e3e1da;
+  --paper:#f6f5f1;
+  --ink:#161616;
+  --ink-soft:#4a4a46;
+  --sage:#5e9d70;
+  --sage-dark:#4d8a5f;
+  --forest:#163620;
+  --forest-2:#1d4a2c;
+  --gold:#b8915f;
+  --white:#f8f7f4;
+  --line-d:rgba(255,255,255,.13);
+  --line-l:rgba(20,20,20,.14);
+  --shadow:0 30px 70px -30px rgba(0,0,0,.55);
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --maxw:1280px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Manrope",system-ui,sans-serif;
+  background:var(--noir);
+  color:var(--white);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  line-height:1.6;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,.serif{font-family:"Playfair Display",serif}
+::selection{background:var(--sage);color:#08120b}
+
+/* film grain overlay */
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;
+  opacity:.045;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,64px)}
+
+/* ============ HEADER ============ */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  transition:background .5s var(--ease),backdrop-filter .5s,border-color .5s,padding .4s;
+  padding:22px 0;border-bottom:1px solid transparent;
+}
+header.scrolled{
+  background:rgba(11,11,12,.72);backdrop-filter:blur(18px) saturate(1.2);
+  border-bottom:1px solid var(--line-d);padding:14px 0;
+}
+.nav-inner{display:flex;align-items:center;gap:28px;justify-content:space-between}
+.logo{display:flex;flex-direction:column;line-height:.82;flex-shrink:0}
+.logo .th{font-family:"Playfair Display",serif;font-weight:800;font-size:30px;letter-spacing:1px}
+.logo .th b{color:var(--sage)}
+.logo .th i{
+  font-style:normal;
+  background:linear-gradient(135deg,#fff 0%,#cfcfcf 35%,#8f8f8f 55%,#efefef 80%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.logo .sub{font-size:9.5px;letter-spacing:5px;font-weight:500;color:#cfcdc6;margin-top:5px;padding-left:2px}
+
+.search{
+  flex:1;max-width:420px;display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.06);border:1px solid var(--line-d);
+  border-radius:40px;padding:11px 18px;transition:.35s var(--ease);
+}
+.search:focus-within{background:rgba(255,255,255,.1);border-color:var(--sage)}
+.search input{flex:1;background:none;border:none;outline:none;color:#fff;font-family:inherit;font-size:14px}
+.search input::placeholder{color:#8a8a86}
+.search svg{width:17px;height:17px;stroke:#bdbcb6;flex-shrink:0}
+
+nav.menu{display:flex;gap:30px;align-items:center}
+nav.menu a{font-size:14.5px;font-weight:500;color:#dededa;position:relative;padding:4px 0;letter-spacing:.2px}
+nav.menu a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1.5px;background:var(--sage);transition:width .35s var(--ease)}
+nav.menu a:hover{color:#fff}
+nav.menu a:hover::after{width:100%}
+
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
+.burger span{width:26px;height:2px;background:#fff;transition:.3s}
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;min-height:100vh;display:flex;align-items:center;
+  /* DROP-IN: substitua o gradiente abaixo por url('foto-cozinha.jpg') no --hero-img */
+  background:
+    radial-gradient(120% 90% at 78% 42%, rgba(60,52,40,.55) 0%, transparent 45%),
+    radial-gradient(80% 60% at 60% 60%, rgba(184,145,95,.10) 0%, transparent 50%),
+    linear-gradient(180deg,#070708 0%,#101013 40%,#0a0a0b 100%);
+  background-size:cover;background-position:center;
+  overflow:hidden;
+}
+.hero::before{ /* vignette */
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(130% 100% at 30% 50%,transparent 30%,rgba(0,0,0,.7) 100%);
+  pointer-events:none;
+}
+.hero::after{ /* faux marble island silhouette glow on the right */
+  content:"";position:absolute;right:-5%;bottom:-10%;width:60%;height:75%;
+  background:
+    linear-gradient(110deg,rgba(20,20,22,.0),rgba(28,26,24,.6)),
+    radial-gradient(60% 40% at 50% 30%,rgba(184,145,95,.18),transparent 60%);
+  filter:blur(2px);transform:skewX(-6deg);pointer-events:none;
+}
+.hero-content{position:relative;z-index:5;max-width:680px;padding-top:60px;margin-left:0;padding-left:clamp(20px,5vw,64px);padding-right:20px}
+.hero .wrap.hero-content{max-width:none;margin:0;padding-left:clamp(24px,6vw,90px)}
+.hero h1{
+  font-weight:800;font-size:clamp(36px,4vw,58px);line-height:1.08;
+  letter-spacing:.5px;text-transform:uppercase;
+}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line span{display:block}
+.hero h1 .arte{color:var(--white)}
+.hero h1 .arte b{font-weight:800;color:var(--sage);font-style:italic;font-weight:600}
+.hero p.sub{
+  font-family:"Playfair Display",serif;font-size:clamp(18px,2vw,23px);font-weight:400;
+  color:#d7d6d0;max-width:540px;margin-top:30px;line-height:1.55;
+}
+.hero .cta-row{margin-top:42px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+
+.btn{
+  display:inline-flex;align-items:center;gap:10px;cursor:pointer;border:none;
+  font-family:inherit;font-weight:600;font-size:15px;letter-spacing:.3px;
+  padding:16px 30px;border-radius:8px;transition:.4s var(--ease);position:relative;overflow:hidden;
+}
+.btn-primary{background:var(--sage);color:#08120b}
+.btn-primary:hover{background:var(--white);transform:translateY(-2px);box-shadow:0 16px 30px -12px rgba(94,157,112,.6)}
+.btn-ghost{background:transparent;color:#fff;border:1px solid var(--line-d)}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.06)}
+.btn svg{width:16px;height:16px;transition:transform .4s var(--ease)}
+.btn-primary:hover svg{transform:translateX(4px)}
+
+.scroll-cue{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:5;
+  display:flex;flex-direction:column;align-items:center;gap:8px;color:#8a8a86;font-size:11px;letter-spacing:3px}
+.scroll-cue .dot{width:22px;height:36px;border:1px solid var(--line-d);border-radius:12px;position:relative}
+.scroll-cue .dot::after{content:"";position:absolute;top:7px;left:50%;width:3px;height:7px;background:var(--sage);border-radius:2px;transform:translateX(-50%);animation:scrolldot 1.8s var(--ease) infinite}
+@keyframes scrolldot{0%{opacity:0;transform:translate(-50%,0)}40%{opacity:1}80%{opacity:0;transform:translate(-50%,12px)}}
+
+/* hero load cascade */
+.rise{opacity:0;transform:translateY(34px);animation:rise 1s var(--ease) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.d1{animation-delay:.15s}.d2{animation-delay:.32s}.d3{animation-delay:.5s}.d4{animation-delay:.68s}.d5{animation-delay:.85s}.d6{animation-delay:1s}
+
+/* ============ SECTION HEADING ============ */
+.sec{padding:clamp(80px,11vw,140px) 0}
+.sec-head{text-align:center;margin-bottom:64px}
+.sec-head h2{font-weight:700;font-size:clamp(36px,5vw,60px);letter-spacing:1px;text-transform:uppercase}
+.sec-head p{font-family:"Playfair Display",serif;font-style:italic;font-size:clamp(17px,2vw,21px);margin-top:8px}
+.sec-head .rule{width:120px;height:2px;background:var(--sage);margin:22px auto 0;position:relative}
+.sec-head .rule::before,.sec-head .rule::after{content:"";position:absolute;top:50%;width:5px;height:5px;border-radius:50%;background:var(--sage);transform:translateY(-50%)}
+.sec-head .rule::before{left:-12px}.sec-head .rule::after{right:-12px}
+
+/* ============ CATÁLOGO ============ */
+.catalogo{background:var(--bone);color:var(--ink);position:relative}
+.catalogo .sec-head h2{color:var(--ink)}
+.catalogo .sec-head p{color:var(--ink-soft)}
+.catalogo .sec-head .rule{background:var(--forest)}
+.catalogo .sec-head .rule::before,.catalogo .sec-head .rule::after{background:var(--forest)}
+
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+.card{
+  background:#fff;border-radius:18px;overflow:hidden;
+  box-shadow:0 18px 40px -28px rgba(0,0,0,.35);
+  border:1px solid rgba(0,0,0,.04);transition:.5s var(--ease);
+}
+.card:hover{transform:translateY(-10px);box-shadow:0 40px 60px -30px rgba(0,0,0,.4)}
+.swatch{height:230px;position:relative;overflow:hidden}
+.swatch::after{ /* polished sheen */
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.14) 48%,transparent 60%);
+  transform:translateX(-60%);transition:transform .9s var(--ease);
+}
+.card:hover .swatch::after{transform:translateX(60%)}
+
+/* === CSS-generated stone surfaces === */
+.stone-saogabriel{
+  background-color:#0c0d10;
+  background-image:
+    radial-gradient(circle at 30% 20%,rgba(60,70,85,.5),transparent 35%),
+    radial-gradient(circle at 75% 75%,rgba(40,46,58,.5),transparent 40%),
+    radial-gradient(rgba(180,195,215,.16) .6px,transparent 1.1px),
+    radial-gradient(rgba(255,255,255,.10) .5px,transparent 1px);
+  background-size:cover,cover,6px 6px,9px 9px;
+  background-position:0 0,0 0,0 0,3px 4px;
+}
+.stone-ubatuba{
+  background-color:#0c130d;
+  background-image:
+    radial-gradient(circle at 28% 26%,rgba(46,82,55,.7),transparent 42%),
+    radial-gradient(circle at 72% 70%,rgba(24,52,33,.75),transparent 46%),
+    radial-gradient(circle at 55% 50%,rgba(70,110,80,.35),transparent 30%),
+    radial-gradient(rgba(150,185,160,.14) .6px,transparent 1.1px);
+  background-size:cover,cover,cover,7px 7px;
+}
+.stone-calacatta{
+  background-color:#eceae5;
+  background-image:
+    radial-gradient(130% 100% at 25% 15%,#fbfaf8,#e6e3dd 55%,#d7d3cb),
+    linear-gradient(122deg,transparent 44%,rgba(96,98,104,.45) 45.2%,transparent 46.4%),
+    linear-gradient(128deg,transparent 60%,rgba(120,122,128,.3) 61%,transparent 62.4%),
+    linear-gradient(118deg,transparent 70%,rgba(80,82,88,.28) 71%,transparent 72%);
+}
+.stone-brancogold{
+  background-color:#f3f1ec;
+  background-image:
+    radial-gradient(130% 100% at 70% 20%,#fdfdfb,#efece5 60%,#e6e2d8),
+    linear-gradient(125deg,transparent 50%,rgba(184,145,95,.5) 51%,transparent 52.4%),
+    linear-gradient(133deg,transparent 64%,rgba(160,120,70,.32) 65%,transparent 66.3%),
+    linear-gradient(120deg,transparent 38%,rgba(150,150,150,.22) 39%,transparent 40%);
+}
+
+.card-body{padding:26px 24px 24px}
+.card-body h3{font-family:"Manrope";font-weight:600;font-size:20px;color:var(--ink);letter-spacing:-.2px}
+.card-body .type{font-size:13.5px;color:var(--ink-soft);font-weight:500;margin-top:3px}
+.card-body .desc{font-size:14px;color:#6b6b66;margin-top:16px;min-height:62px;line-height:1.55}
+.card-body .vermais{
+  margin-top:18px;display:inline-flex;align-items:center;gap:8px;
+  background:var(--forest);color:#fff;padding:11px 22px;border-radius:40px;font-size:13.5px;font-weight:600;
+  transition:.4s var(--ease);
+}
+.card-body .vermais:hover{background:var(--forest-2);gap:13px}
+.catalogo .center-btn{text-align:center;margin-top:56px}
+.btn-pill-sage{background:var(--sage);color:#08120b;padding:15px 38px;border-radius:40px;font-weight:600;display:inline-flex;align-items:center;gap:9px;transition:.4s var(--ease)}
+.btn-pill-sage:hover{background:var(--sage-dark);transform:translateY(-2px);color:#fff}
+
+/* ============ PROJETOS ============ */
+.projetos{background:var(--noir);position:relative}
+.projetos::before{content:"";position:absolute;inset:0;background:radial-gradient(80% 60% at 50% 0%,rgba(184,145,95,.06),transparent 60%);pointer-events:none}
+.proj-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px}
+.proj-arrows{display:flex;gap:12px}
+.proj-arrows button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line-d);background:transparent;color:#fff;cursor:pointer;display:grid;place-items:center;transition:.4s var(--ease)}
+.proj-arrows button:hover{background:var(--sage);color:#08120b;border-color:var(--sage)}
+.proj-arrows svg{width:18px;height:18px}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.proj-card{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:1/1.02;cursor:pointer}
+.proj-img{position:absolute;inset:0;transition:transform 1s var(--ease)}
+.proj-card:hover .proj-img{transform:scale(1.07)}
+/* DROP-IN: troque os gradientes por url('foto.jpg') em cada .proj-img */
+.proj-cozinha{background:
+  linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.55)),
+  linear-gradient(135deg,#d8d4cc 0%,#b7b2a8 45%,#8d8a82 100%)}
+.proj-banheiro{background:
+  linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.55)),
+  linear-gradient(135deg,#e7e6e2 0%,#c4c8cb 50%,#9aa0a4 100%)}
+.proj-externa{background:
+  linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.6)),
+  linear-gradient(135deg,#c9b79c 0%,#a08b6c 50%,#6e5f49 100%)}
+.proj-card .label{position:absolute;left:24px;bottom:22px;z-index:3;font-family:"Playfair Display",serif;font-weight:600;font-size:clamp(20px,2vw,27px);text-transform:uppercase;letter-spacing:1px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.6);transition:.4s var(--ease)}
+.proj-card:hover .label{transform:translateY(-4px)}
+.proj-card .tag{position:absolute;left:24px;bottom:22px;opacity:0;z-index:3}
+.proj-card .hint{position:absolute;top:14px;right:14px;z-index:3;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.25);padding:5px 9px;border-radius:4px}
+.projetos .center-btn{text-align:center;margin-top:52px}
+
+/* ============ SOBRE ============ */
+.sobre{background:var(--paper);color:var(--ink);position:relative;overflow:hidden}
+.sobre-grid{display:grid;grid-template-columns:1.05fr 1fr;align-items:stretch;gap:0}
+.sobre-img{
+  position:relative;min-height:560px;border-radius:4px;overflow:hidden;
+  /* DROP-IN: url('fachada-marmoraria.jpg') */
+  background:
+    linear-gradient(160deg,rgba(0,0,0,.25),rgba(0,0,0,.65)),
+    linear-gradient(135deg,#2a2722 0%,#1a1814 60%,#26221b 100%);
+  display:flex;flex-direction:column;justify-content:flex-end;padding:40px;
+}
+.sobre-img .brand-sign{position:absolute;top:42px;left:42px;right:42px}
+.sobre-img .brand-sign .big{font-family:"Playfair Display",serif;font-weight:700;font-size:clamp(30px,3.4vw,46px);letter-spacing:2px;color:#e9ddc4;display:flex;align-items:center;gap:14px}
+.sobre-img .brand-sign .big .m{
+  font-size:1.3em;
+  background:linear-gradient(135deg,var(--gold),#e6cfa0 50%,#9c7a48);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sobre-img .brand-sign .tagline{font-size:11px;letter-spacing:5px;color:#b8ad97;margin-top:8px;border-top:1px solid rgba(184,145,95,.4);padding-top:8px;display:inline-block}
+.sobre-img .values{display:flex;gap:22px;color:#cdc3ad;font-size:11px;letter-spacing:3px;font-weight:600}
+.sobre-img .values span{display:flex;align-items:center;gap:7px}
+.sobre-img .values .dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+
+.sobre-text{padding:clamp(40px,5vw,72px) 0 clamp(40px,5vw,72px) clamp(40px,5vw,70px)}
+.eyebrow{color:var(--sage);font-size:13px;font-weight:700;letter-spacing:4px;text-transform:uppercase}
+.sobre-text h2{font-weight:700;font-size:clamp(30px,3.6vw,48px);line-height:1.12;text-transform:uppercase;margin:18px 0 26px;color:var(--ink)}
+.sobre-text p{color:#5a5a54;font-size:16px;margin-bottom:18px;max-width:560px}
+.sobre-feats{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.feat{display:flex;align-items:center;gap:11px;font-size:13.5px;font-weight:600;color:var(--ink);border:1px solid var(--line-l);padding:11px 18px;border-radius:40px}
+.feat svg{width:18px;height:18px;stroke:var(--sage)}
+
+/* ============ CTA FINAL ============ */
+.cta-final{background:var(--noir);position:relative;text-align:center;padding:clamp(80px,10vw,130px) 0;overflow:hidden}
+.cta-final::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(70% 120% at 50% 0%,rgba(94,157,112,.16),transparent 60%),
+  radial-gradient(50% 80% at 50% 120%,rgba(184,145,95,.1),transparent 60%)}
+.cta-final .inner{position:relative;z-index:2;max-width:720px;margin:0 auto}
+.cta-final .eyebrow{display:block;margin-bottom:18px}
+.cta-final h2{font-weight:700;font-size:clamp(34px,5vw,62px);line-height:1.05}
+.cta-final h2 em{font-style:italic;color:var(--sage)}
+.cta-final p{color:#bdbcb6;margin:22px auto 38px;font-size:17px;max-width:480px}
+
+/* ============ FOOTER ============ */
+footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 36px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1.1fr 1.1fr;gap:40px}
+.foot-brand .socials{display:flex;gap:12px;margin-bottom:26px}
+.foot-brand .socials a{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.06);border:1px solid var(--line-d);display:grid;place-items:center;color:#cfcdc6;transition:.4s var(--ease)}
+.foot-brand .socials a:hover{background:var(--sage);color:#08120b;border-color:var(--sage)}
+.foot-brand .socials svg{width:16px;height:16px}
+.foot-logo .th{font-family:"Playfair Display",serif;font-weight:800;font-size:46px;letter-spacing:1px;line-height:1}
+.foot-logo .th b{color:var(--sage)}
+.foot-logo .th i{font-style:normal;background:linear-gradient(135deg,#fff,#bdbdbd 50%,#efefef);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.foot-logo .sub{font-size:11px;letter-spacing:6px;color:#cfcdc6;margin-top:8px}
+.foot-col h4{font-size:15px;font-weight:700;margin-bottom:20px;color:#fff}
+.foot-col ul{list-style:none}
+.foot-col li{margin-bottom:13px}
+.foot-col a{color:#b1b0aa;font-size:14.5px;transition:.3s}
+.foot-col a:hover{color:var(--sage);padding-left:4px}
+.foot-bottom{margin-top:54px;padding-top:24px;border-top:1px solid var(--line-d);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12.5px;color:#76756f;letter-spacing:.3px}
+.foot-bottom a{color:#76756f}.foot-bottom a:hover{color:#fff}
+
+/* ============ REVEAL ON SCROLL ============ */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal.s1{transition-delay:.08s}.reveal.s2{transition-delay:.18s}.reveal.s3{transition-delay:.28s}.reveal.s4{transition-delay:.38s}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:1080px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .search{max-width:280px}
+  nav.menu{gap:20px}
+}
+@media(max-width:860px){
+  .search{display:none}
+  nav.menu{
+    position:fixed;inset:0 0 0 auto;width:78%;max-width:340px;
+    background:rgba(11,11,12,.97);backdrop-filter:blur(20px);
+    flex-direction:column;justify-content:center;gap:30px;padding:40px;
+    transform:translateX(100%);transition:transform .5s var(--ease);z-index:99;
+    border-left:1px solid var(--line-d);
+  }
+  nav.menu.open{transform:none}
+  nav.menu a{font-size:22px;font-family:"Playfair Display",serif}
+  .burger{display:flex}
+  header.menu-active .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  header.menu-active .burger span:nth-child(2){opacity:0}
+  header.menu-active .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .proj-grid{grid-template-columns:1fr;gap:18px}
+  .proj-card{aspect-ratio:16/11}
+  .sobre-grid{grid-template-columns:1fr}
+  .sobre-img{min-height:380px}
+  .sobre-text{padding:46px 0 0}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:36px 24px}
+  .foot-brand{grid-column:1/-1}
+}
+@media(max-width:540px){
+  .cards{grid-template-columns:1fr}
+  .hero h1{font-size:clamp(40px,12vw,60px)}
+  .foot-grid{grid-template-columns:1fr}
+  .btn,.btn-primary{width:100%;justify-content:center}
+  .hero .cta-row{flex-direction:column;align-items:stretch}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header id="header">
+  <div class="wrap nav-inner">
+    <a href="#" class="logo" aria-label="TH Marmoraria">
+      <span class="th"><b>T</b><i>H</i></span>
+      <span class="sub">MARMORARIA</span>
+    </a>
+    <label class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" placeholder="Buscar pedras, projetos…" aria-label="Buscar">
+    </label>
+    <nav class="menu" id="menu">
+      <a href="index.html">Início</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="projetos.html">Projetos</a>
+      <a href="index.html#sobre">Sobre nós</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <!-- DROP-IN: defina background:url('cozinha-luxo.jpg') no .hero para a foto real -->
+  <div class="wrap hero-content">
+    <h1>
+      <span class="line"><span class="rise d1">Transformamos pedras</span></span>
+      <span class="line arte"><span class="rise d2">em <b>arte.</b></span></span>
+    </h1>
+    <p class="sub rise d3">Materiais de alta qualidade e acabamentos que valorizam seus ambientes com elegância e sofisticação.</p>
+    <div class="cta-row">
+      <a href="#contato" class="btn btn-primary rise d4">Solicitar orçamento
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="catalogo.html" class="btn btn-ghost rise d5">Ver catálogo</a>
+    </div>
+  </div>
+  <div class="scroll-cue rise d6"><span class="dot"></span>ROLE</div>
+</section>
+
+<!-- ============ CATÁLOGO ============ -->
+<section class="sec catalogo" id="catalogo">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Catálogo</h2>
+      <p>Aqui está um pouquinho das nossas pedras.</p>
+      <div class="rule"></div>
+    </div>
+    <div class="cards">
+
+      <article class="card reveal s1">
+        <div class="swatch stone-saogabriel"></div>
+        <div class="card-body">
+          <h3>São Gabriel</h3>
+          <div class="type">Granito</div>
+          <p class="desc">Preto absoluto com brilho profundo. Resiste a riscos e calor — imponência para bancadas de cozinha.</p>
+          <a href="#" class="vermais">Ver mais →</a>
+        </div>
+      </article>
+
+      <article class="card reveal s2">
+        <div class="swatch stone-ubatuba"></div>
+        <div class="card-body">
+          <h3>Verde Ubatuba</h3>
+          <div class="type">Granito</div>
+          <p class="desc">Verde-escuro com reflexos minerais. Um clássico brasileiro que dá força e personalidade a ilhas e lavabos.</p>
+          <a href="#" class="vermais">Ver mais →</a>
+        </div>
+      </article>
+
+      <article class="card reveal s3">
+        <div class="swatch stone-calacatta"></div>
+        <div class="card-body">
+          <h3>Calacatta Borghini</h3>
+          <div class="type">Mármore</div>
+          <p class="desc">Branco nobre com veios cinza marcantes. O mármore dos projetos assinados — painéis e revestimentos.</p>
+          <a href="#" class="vermais">Ver mais →</a>
+        </div>
+      </article>
+
+      <article class="card reveal s4">
+        <div class="swatch stone-brancogold"></div>
+        <div class="card-body">
+          <h3>Branco Gold Biancogres</h3>
+          <div class="type">Mármore</div>
+          <p class="desc">Fundo claro com veios dourados sutis. Luxo discreto para banheiros, lareiras e detalhes de destaque.</p>
+          <a href="#" class="vermais">Ver mais →</a>
+        </div>
+      </article>
+
+    </div>
+    <div class="center-btn reveal">
+      <a href="catalogo.html" class="btn-pill-sage">Ver todas as outras
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJETOS ============ -->
+<section class="sec projetos" id="projetos">
+  <div class="wrap">
+    <div class="proj-top">
+      <div class="sec-head reveal" style="text-align:left;margin-bottom:0">
+        <h2>Projetos</h2>
+        <p>Ambientes contam histórias.</p>
+        <div class="rule" style="margin-left:0"></div>
+      </div>
+      <div class="proj-arrows reveal">
+        <button id="projPrev" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button id="projNext" aria-label="Próximo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+    <div class="proj-grid" id="projGrid">
+      <!-- DROP-IN: troque o background do .proj-img por url('...') -->
+      <a href="#" class="proj-card reveal s1">
+        <div class="proj-img proj-cozinha"></div>
+        <span class="hint">FOTO DO PROJETO</span>
+        <span class="label">Cozinhas</span>
+      </a>
+      <a href="#" class="proj-card reveal s2">
+        <div class="proj-img proj-banheiro"></div>
+        <span class="hint">FOTO DO PROJETO</span>
+        <span class="label">Banheiros</span>
+      </a>
+      <a href="#" class="proj-card reveal s3">
+        <div class="proj-img proj-externa"></div>
+        <span class="hint">FOTO DO PROJETO</span>
+        <span class="label">Área externa</span>
+      </a>
+    </div>
+    <div class="center-btn reveal">
+      <a href="projetos.html" class="btn-pill-sage">Ver todas as outras
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOBRE ============ -->
+<section class="sec sobre" id="sobre">
+  <div class="wrap sobre-grid">
+    <div class="sobre-img reveal">
+      <!-- DROP-IN: background:url('fachada-loja.jpg') -->
+      <div class="brand-sign">
+        <div class="big"><span class="m">M</span>MARMORARIA</div>
+        <span class="tagline">QUALIDADE QUE TRANSFORMA</span>
+      </div>
+      <div class="values">
+        <span><span class="dot"></span>LIMPEZA</span>
+        <span><span class="dot"></span>RESISTÊNCIA</span>
+        <span><span class="dot"></span>UNIÃO</span>
+      </div>
+    </div>
+    <div class="sobre-text">
+      <span class="eyebrow reveal">Sobre nós</span>
+      <h2 class="reveal s1">Tradição que se transforma em excelência</h2>
+      <p class="reveal s2">Há mais de duas décadas a TH Marmoraria seleciona, beneficia e instala as pedras que dão alma aos melhores projetos da região. Cada chapa é escolhida à mão — porque acreditamos que um material extraordinário merece um acabamento à altura.</p>
+      <p class="reveal s3">Do corte milimétrico ao polimento final, unimos tecnologia de ponta ao olhar artesanal de quem entende de pedra. O resultado são superfícies que resistem ao tempo e elevam qualquer ambiente, com a elegância que só o natural oferece.</p>
+      <div class="sobre-feats reveal s4">
+        <span class="feat"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Seleção à mão</span>
+        <span class="feat"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>Corte de precisão</span>
+        <span class="feat"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="m6 9 6-6 6 6M6 9v9a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9M9 21v-6h6v6"/></svg>Instalação própria</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="cta-final" id="contato">
+  <div class="wrap inner">
+    <span class="eyebrow reveal">Vamos conversar</span>
+    <h2 class="reveal s1">Pronto para transformar <em>seu ambiente?</em></h2>
+    <p class="reveal s2">Conte seu projeto e receba um orçamento sem compromisso. Da chapa escolhida à instalação final, cuidamos de cada detalhe.</p>
+    <a href="#" class="btn btn-primary reveal s3" style="display:inline-flex">Solicitar orçamento
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="socials">
+          <a href="#" aria-label="Localização"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.3-7-11a7 7 0 1 1 14 0c0 4.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Telefone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5ZM3 9h4v12H3zM10 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V21h-4z"/></svg></a>
+        </div>
+        <div class="foot-logo">
+          <span class="th"><b>T</b><i>H</i></span>
+          <div class="sub">MARMORARIA</div>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Menu</h4>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="projetos.html">Projetos</a></li>
+          <li><a href="index.html#sobre">Sobre nós</a></li>
+          <li><a href="index.html#contato">Contato</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Catálogo</h4>
+        <ul>
+          <li><a href="#">Pedra de São Gabriel</a></li>
+          <li><a href="#">Mármore Verde Ubatuba</a></li>
+          <li><a href="#">Calacatta Borghini</a></li>
+          <li><a href="#">Branco Gold Biancogres</a></li>
+          <li><a href="#">Azul Bahia</a></li>
+          <li><a href="#">Crema Marfil</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contatos</h4>
+        <ul>
+          <li><a href="#">WhatsApp — 0000-0000</a></li>
+          <li><a href="#">Telefone — 0000-0000</a></li>
+          <li><a href="#">Endereço</a></li>
+          <li><a href="#">Horários</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2025 TH Marmoraria. Qualidade que transforma.</span>
+      <span>Pedras naturais · Mármores · Granitos · Quartzo</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// header scroll state
+const header=document.getElementById('header');
+addEventListener('scroll',()=>{header.classList.toggle('scrolled',scrollY>40)},{passive:true});
+
+// mobile menu
+const burger=document.getElementById('burger'),menu=document.getElementById('menu');
+burger.addEventListener('click',()=>{menu.classList.toggle('open');header.classList.toggle('menu-active')});
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');header.classList.remove('menu-active')}));
+
+// scroll reveal
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
+},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// projetos arrows (scroll on mobile / subtle nudge on desktop)
+const grid=document.getElementById('projGrid');
+document.getElementById('projNext').onclick=()=>grid.scrollBy({left:grid.clientWidth*.8,behavior:'smooth'});
+document.getElementById('projPrev').onclick=()=>grid.scrollBy({left:-grid.clientWidth*.8,behavior:'smooth'});
+</script>
+</body>
+</html>
