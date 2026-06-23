@@ -65,15 +65,8 @@ header.scrolled{
   border-bottom:1px solid var(--line-d);padding:14px 0;
 }
 .nav-inner{display:flex;align-items:center;gap:28px;justify-content:space-between}
-.logo{display:flex;flex-direction:column;line-height:.82;flex-shrink:0}
-.logo .th{font-family:"Playfair Display",serif;font-weight:800;font-size:30px;letter-spacing:1px}
-.logo .th b{color:var(--sage)}
-.logo .th i{
-  font-style:normal;
-  background:linear-gradient(135deg,#fff 0%,#cfcfcf 35%,#8f8f8f 55%,#efefef 80%);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-}
-.logo .sub{font-size:9.5px;letter-spacing:5px;font-weight:500;color:#cfcdc6;margin-top:5px;padding-left:2px}
+.logo{display:flex;align-items:center;flex-shrink:0}
+.logo-img{height:76px;width:auto;display:block}
 
 .search{
   flex:1;max-width:420px;display:flex;align-items:center;gap:10px;
@@ -378,9 +371,8 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
 <!-- ============ HEADER ============ -->
 <header id="header">
   <div class="wrap nav-inner">
-    <a href="#" class="logo" aria-label="TH Marmoraria">
-      <span class="th"><b>T</b><i>H</i></span>
-      <span class="sub">MARMORARIA</span>
+    <a href="index.html" class="logo" aria-label="TH Marmoraria">
+      <img src="logo_th_site.png" alt="TH Marmoraria" class="logo-img">
     </a>
     <label class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
