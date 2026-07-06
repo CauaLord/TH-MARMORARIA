@@ -187,49 +187,10 @@ nav.menu a.active::after{width:100%}
 .card-body .ambs{font-size:12px;color:#8a8a84;margin-top:10px;letter-spacing:.2px}
 
 /* === Superfícies de pedra geradas em CSS (placeholders — trocar por fotos reais) === */
-.stone-saogabriel{
-  background-color:#0c0d10;
-  background-image:
-    radial-gradient(circle at 30% 20%,rgba(60,70,85,.5),transparent 35%),
-    radial-gradient(circle at 75% 75%,rgba(40,46,58,.5),transparent 40%),
-    radial-gradient(rgba(180,195,215,.16) .6px,transparent 1.1px),
-    radial-gradient(rgba(255,255,255,.10) .5px,transparent 1px);
-  background-size:cover,cover,6px 6px,9px 9px;
-  background-position:0 0,0 0,0 0,3px 4px;
-}
-.stone-ubatuba{
-  background-color:#0c130d;
-  background-image:
-    radial-gradient(circle at 28% 26%,rgba(46,82,55,.7),transparent 42%),
-    radial-gradient(circle at 72% 70%,rgba(24,52,33,.75),transparent 46%),
-    radial-gradient(circle at 55% 50%,rgba(70,110,80,.35),transparent 30%),
-    radial-gradient(rgba(150,185,160,.14) .6px,transparent 1.1px);
-  background-size:cover,cover,cover,7px 7px;
-}
-.stone-calacatta{
-  background-color:#f3efe8;
-  background-image:
-    radial-gradient(130% 100% at 25% 15%,#fcf9f4,#f0ebe2 55%,#e7e0d4),
-    linear-gradient(122deg,transparent 44%,rgba(190,140,80,.5) 45.2%,transparent 46.4%),
-    linear-gradient(128deg,transparent 60%,rgba(200,155,95,.38) 61%,transparent 62.4%),
-    linear-gradient(118deg,transparent 70%,rgba(170,125,70,.3) 71%,transparent 72%);
-}
-.stone-brancogold{
-  background-color:#f4f3f0;
-  background-image:
-    radial-gradient(130% 100% at 70% 20%,#fdfdfc,#f0eee9 60%,#e4e1da),
-    linear-gradient(125deg,transparent 50%,rgba(140,140,142,.45) 51%,transparent 52.6%),
-    linear-gradient(133deg,transparent 64%,rgba(120,120,124,.3) 65%,transparent 66.4%),
-    linear-gradient(115deg,transparent 36%,rgba(160,158,152,.28) 37%,transparent 38.4%);
-}
-.stone-tajmahal{
-  background-color:#e6ddcb;
-  background-image:
-    radial-gradient(120% 100% at 30% 20%,#f1eadb,#e3d9c4 55%,#d6c9ae),
-    linear-gradient(95deg,transparent 30%,rgba(190,175,145,.4) 32%,transparent 35%),
-    linear-gradient(92deg,transparent 55%,rgba(180,165,135,.35) 57%,transparent 60%),
-    linear-gradient(98deg,transparent 75%,rgba(170,155,125,.3) 77%,transparent 80%);
-}
+.stone-montblanc{background:url('MONT BLANC.jpg') center/cover no-repeat}
+.stone-verdepantanal{background:url('VERDE PANTANAL.jpg') center/cover no-repeat}
+.stone-biancopiacenza{background:url('BIANCO PIACENZA.jpg') center/cover no-repeat}
+.stone-tajmahal{background:url('TAJ MAHAL 2.jpg') center/cover no-repeat}
 .stone-vangogh{
   background-color:#1f3a4a;
   background-image:
@@ -434,6 +395,7 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
           <button data-value="">Todos os tipos</button>
           <button data-value="granito">Granito</button>
           <button data-value="marmore">Mármore</button>
+          <button data-value="quartzito">Quartzito</button>
         </div>
       </div>
 
@@ -485,47 +447,38 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
     <div class="cards" id="cards">
 
       <!-- Página 1 -->
-      <article class="card" data-tipo="granito" data-cor="preto" data-amb="cozinha externa">
-        <div class="swatch stone-saogabriel"></div>
+      <article class="card" data-tipo="quartzito" data-cor="branco" data-amb="cozinha banheiro">
+        <div class="swatch stone-montblanc"></div>
         <div class="card-body">
-          <h3>São Gabriel</h3>
+          <h3>Mont Blanc</h3>
+          <div class="type">Quartzito</div>
+          <div class="ambs">Cozinha · Banheiro</div>
+        </div>
+      </article>
+
+      <article class="card" data-tipo="granito" data-cor="verde" data-amb="cozinha externa">
+        <div class="swatch stone-verdepantanal"></div>
+        <div class="card-body">
+          <h3>Verde Pantanal</h3>
           <div class="type">Granito</div>
           <div class="ambs">Cozinha · Área externa</div>
         </div>
       </article>
 
-      <article class="card" data-tipo="granito" data-cor="verde" data-amb="cozinha banheiro">
-        <div class="swatch stone-ubatuba"></div>
-        <div class="card-body">
-          <h3>Verde Ubatuba</h3>
-          <div class="type">Granito</div>
-          <div class="ambs">Cozinha · Banheiro</div>
-        </div>
-      </article>
-
-      <article class="card" data-tipo="marmore" data-cor="branco bege" data-amb="banheiro revestimento">
-        <div class="swatch stone-calacatta"></div>
-        <div class="card-body">
-          <h3>Calacatta Borghini</h3>
-          <div class="type">Mármore</div>
-          <div class="ambs">Banheiro · Revestimentos</div>
-        </div>
-      </article>
-
       <article class="card" data-tipo="marmore" data-cor="branco" data-amb="banheiro revestimento">
-        <div class="swatch stone-brancogold"></div>
+        <div class="swatch stone-biancopiacenza"></div>
         <div class="card-body">
-          <h3>Branco Gold Biancogres</h3>
+          <h3>Bianco Piacenza</h3>
           <div class="type">Mármore</div>
           <div class="ambs">Banheiro · Revestimentos</div>
         </div>
       </article>
 
-      <article class="card" data-tipo="granito" data-cor="bege" data-amb="cozinha banheiro">
+      <article class="card" data-tipo="quartzito" data-cor="bege" data-amb="cozinha banheiro">
         <div class="swatch stone-tajmahal"></div>
         <div class="card-body">
           <h3>Taj Mahal</h3>
-          <div class="type">Granito</div>
+          <div class="type">Quartzito</div>
           <div class="ambs">Cozinha · Banheiro</div>
         </div>
       </article>
@@ -648,10 +601,10 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
       <div class="foot-col">
         <h4>Catálogo</h4>
         <ul>
-          <li><a href="#">Pedra de São Gabriel</a></li>
-          <li><a href="#">Mármore Verde Ubatuba</a></li>
-          <li><a href="#">Calacatta Borghini</a></li>
-          <li><a href="#">Branco Gold Biancogres</a></li>
+          <li><a href="#">Mont Blanc</a></li>
+          <li><a href="#">Verde Pantanal</a></li>
+          <li><a href="#">Bianco Piacenza</a></li>
+          <li><a href="#">Taj Mahal</a></li>
           <li><a href="#">Nero Marquina</a></li>
           <li><a href="#">Crema Marfil</a></li>
         </ul>
