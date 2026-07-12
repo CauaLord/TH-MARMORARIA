@@ -140,7 +140,7 @@ nav.menu a:hover::after{width:100%}
 .btn svg{width:16px;height:16px;transition:transform .4s var(--ease)}
 .btn-primary:hover svg{transform:translateX(4px)}
 
-.scroll-cue{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:5;
+.scroll-cue{position:absolute;bottom:30px;left:0;right:0;margin:0 auto;width:max-content;z-index:5;
   display:flex;flex-direction:column;align-items:center;gap:8px;color:#8a8a86;font-size:11px;letter-spacing:3px}
 .scroll-cue .dot{width:22px;height:36px;border:1px solid var(--line-d);border-radius:12px;position:relative}
 .scroll-cue .dot::after{content:"";position:absolute;top:7px;left:50%;width:3px;height:7px;background:var(--sage);border-radius:2px;transform:translateX(-50%);animation:scrolldot 1.8s var(--ease) infinite}
@@ -317,6 +317,10 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
   header.menu-active .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   header.menu-active .burger span:nth-child(2){opacity:0}
   header.menu-active .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .proj-top{justify-content:center}
+  .proj-top .sec-head{text-align:center!important;margin-bottom:0!important}
+  .proj-top .sec-head .rule{margin-left:auto!important}
+  .proj-arrows{display:none}
   .proj-grid{grid-template-columns:1fr;gap:18px}
   .proj-card{aspect-ratio:16/11}
   .sobre-grid{grid-template-columns:1fr}
@@ -356,10 +360,6 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
     <a href="index.html" class="logo" aria-label="TH Marmoraria">
       <img src="logo_th_site.png" alt="TH Marmoraria" class="logo-img">
     </a>
-    <label class="search">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      <input type="text" placeholder="Buscar pedras, projetos…" aria-label="Buscar">
-    </label>
     <nav class="menu" id="menu">
       <a href="index.html">Início</a>
       <a href="catalogo.html">Catálogo</a>
@@ -508,12 +508,12 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
     <div class="sobre-text">
       <span class="eyebrow reveal">Sobre nós</span>
       <h2 class="reveal s1">Tradição que se transforma em excelência</h2>
-      <p class="reveal s2">Há mais de duas décadas a TH Marmoraria seleciona, beneficia e instala as pedras que dão alma aos melhores projetos da região. Cada chapa é escolhida à mão — porque acreditamos que um material extraordinário merece um acabamento à altura.</p>
-      <p class="reveal s3">Do corte milimétrico ao polimento final, unimos tecnologia de ponta ao olhar artesanal de quem entende de pedra. O resultado são superfícies que resistem ao tempo e elevam qualquer ambiente, com a elegância que só o natural oferece.</p>
+      <p class="reveal s2">Há mais de duas décadas a TH Marmoraria seleciona, beneficia e instala as pedras que dão alma aos melhores projetos da região. Cada chapa é escolhida à mão, porque acreditamos que um material extraordinário merece um acabamento à altura.</p>
+      <p class="reveal s3">O resultado são superfícies que resistem ao tempo e elevam qualquer ambiente, com a elegância que só o natural oferece.</p>
       <div class="sobre-feats reveal s4">
         <span class="feat"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Seleção à mão</span>
         <span class="feat"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>Corte de precisão</span>
-        <span class="feat"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="m6 9 6-6 6 6M6 9v9a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9M9 21v-6h6v6"/></svg>Instalação própria</span>
+        <span class="feat"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="m6 9 6-6 6 6M6 9v9a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9M9 21v-6h6v6"/></svg>Parceiros profissionais para instalação</span>
       </div>
     </div>
   </div>
@@ -572,12 +572,11 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
         <ul>
           <li><a href="https://wa.me/027996359595?text=Ol%C3%A1%21%20Vim%20atrav%C3%A9s%20do%20site%20da%20TH%20Marmoraria%20e%20gostaria%20de%20solicitar%20um%20or%C3%A7amento." target="_blank" rel="noopener">WhatsApp — (27) 99635-9595</a></li>
           <li><a href="https://maps.app.goo.gl/iGLEMzMZqU4gpmX88" target="_blank" rel="noopener">Endereço</a></li>
-          <li><a href="#">Horários</a></li>
         </ul>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© 2025 TH Marmoraria. Qualidade que transforma.</span>
+      <span>© 2026 TH Marmoraria.</span>
     </div>
   </div>
 </footer>
