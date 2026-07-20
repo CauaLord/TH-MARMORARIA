@@ -117,22 +117,23 @@ nav.menu a.active::after{width:100%}
   font-family:"Playfair Display",serif;font-size:clamp(18px,1.9vw,23px);font-weight:400;
   color:#d7d6d0;margin-top:28px;line-height:1.55;max-width:520px;
 }
-/* moldura da foto editorial (DROP-IN: troque o background por url('foto.jpg')) */
 .hero-photo{
   position:relative;border-radius:8px;overflow:hidden;min-height:clamp(360px,52vh,560px);
   border:1px solid var(--line-d);
+  display:flex;align-items:center;justify-content:center;padding:22px;
   background:
     radial-gradient(120% 90% at 78% 20%, rgba(95,157,114,.18) 0%, transparent 50%),
     linear-gradient(155deg,#2b2620 0%,#1a1712 55%,#221d16 100%);
   box-shadow:var(--shadow);
 }
+.hero-photo img{
+  max-width:100%;max-height:100%;width:auto;height:auto;
+  object-fit:contain;border-radius:4px;position:relative;z-index:1;
+}
 .hero-photo::after{
   content:"";position:absolute;inset:0;
   background:linear-gradient(120deg,transparent 40%,rgba(0,0,0,.35) 100%);
-}
-.hero-photo .ph-note{
-  position:absolute;left:20px;bottom:18px;z-index:2;font-size:10px;letter-spacing:2px;
-  color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.22);padding:6px 11px;border-radius:5px;
+  pointer-events:none;
 }
 
 /* ============ BLOCO CLARO / ESCURO ============ */
@@ -290,9 +291,8 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
         <h1 class="rise d2">A gente cuida do seu projeto <em>do começo ao fim.</em></h1>
         <p class="sub rise d3">Ficamos em Vila Velha e atendemos toda a Grande Vitória. Da análise do seu projeto até a fabricação da peça, a TH acompanha cada etapa de perto.</p>
       </div>
-      <!-- DROP-IN: troque o background do .hero-photo por url('ambiente-trabalho.jpg') -->
       <div class="hero-photo rise d3">
-        <span class="ph-note">FOTO EDITORIAL</span>
+        <img src="FOTO DE SAMUCA COM IA.png" alt="Samuel, fundador da TH Marmoraria">
       </div>
     </div>
   </div>

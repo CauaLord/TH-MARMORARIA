@@ -162,11 +162,32 @@ form.contact-form{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .canal .val{font-size:16.5px;color:#fff;font-weight:600;margin-top:3px}
 .canal .val.small{font-size:14.5px;font-weight:500;color:#d7d6d0}
 .canal a.val:hover{color:var(--gold-accent)}
+.canais-sub{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* WhatsApp: elemento principal, estilo de botão */
+.canal-wa{
+  display:flex;align-items:center;gap:18px;
+  background:var(--gold-accent);color:#100c02;border-radius:14px;
+  padding:24px 26px;transition:.4s var(--ease);
+  box-shadow:0 22px 44px -20px rgba(95,157,114,.55);
+}
+.canal-wa:hover{background:#7FB18E;transform:translateY(-2px);box-shadow:0 28px 52px -20px rgba(95,157,114,.7)}
+.canal-wa .ic{
+  flex-shrink:0;width:54px;height:54px;display:grid;place-items:center;
+  background:rgba(16,12,2,.14);border-radius:12px;
+}
+.canal-wa .ic svg{width:28px;height:28px;stroke:#100c02;fill:none;stroke-width:1.7}
+.canal-wa .txt{display:flex;flex-direction:column;gap:4px;flex:1}
+.canal-wa .lbl{font-size:12.5px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:rgba(16,12,2,.65)}
+.canal-wa .val{font-size:clamp(19px,2vw,23px);font-weight:800;color:#100c02;margin-top:0}
+.canal-wa .arrow{width:20px;height:20px;stroke:#100c02;flex-shrink:0;transition:transform .4s var(--ease)}
+.canal-wa:hover .arrow{transform:translateX(4px)}
 .map-frame{
   position:relative;border-radius:14px;overflow:hidden;min-height:340px;
   border:1px solid var(--line-d);box-shadow:var(--shadow);
 }
 .map-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.25) contrast(1.05)}
+.map-frame .map-link{position:absolute;inset:0;z-index:2}
 
 /* ============ SEÇÃO 5 | REFORÇO DE CONFIANÇA ============ */
 .selo{background:var(--paper);color:var(--ink);text-align:center;padding:clamp(46px,6vw,72px) 0}
@@ -221,6 +242,7 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
 @media(max-width:540px){
   .wa-hero-btn{width:100%;justify-content:center;padding:20px 24px}
   .foot-grid{grid-template-columns:1fr}
+  .canais-sub{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
@@ -315,22 +337,25 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
     </div>
     <div class="canais-grid">
       <div class="canais-list">
-        <a href="https://wa.me/027996359595?text=Ol%C3%A1%21%20Vim%20atrav%C3%A9s%20do%20site%20da%20TH%20Marmoraria%20e%20gostaria%20de%20solicitar%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="canal reveal s1">
+        <a href="https://wa.me/027996359595?text=Ol%C3%A1%21%20Vim%20atrav%C3%A9s%20do%20site%20da%20TH%20Marmoraria%20e%20gostaria%20de%20solicitar%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="canal-wa reveal s1">
           <span class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></span>
-          <span><span class="lbl">WhatsApp</span><span class="val">(27) 99635-9595</span></span>
+          <span class="txt"><span class="lbl">WhatsApp</span><span class="val">(27) 99635-9595</span></span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
-        <a href="https://www.instagram.com/thmarmoraria/" target="_blank" rel="noopener" class="canal reveal s2">
-          <span class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#5F9D72" stroke="none"/></svg></span>
-          <span><span class="lbl">Instagram</span><span class="val">@thmarmoraria</span></span>
-        </a>
-        <a href="https://maps.app.goo.gl/iGLEMzMZqU4gpmX88" target="_blank" rel="noopener" class="canal reveal s3">
-          <span class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.3-7-11a7 7 0 1 1 14 0c0 4.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-          <span><span class="lbl">Endereço</span><span class="val small">Vila Velha, Grande Vitória, ES</span></span>
-        </a>
+        <div class="canais-sub">
+          <a href="https://www.instagram.com/thmarmoraria/" target="_blank" rel="noopener" class="canal reveal s2">
+            <span class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#5F9D72" stroke="none"/></svg></span>
+            <span><span class="lbl">Instagram:<br></span><span class="val">@thmarmoraria</span></span>
+          </a>
+          <a href="https://maps.app.goo.gl/iGLEMzMZqU4gpmX88" target="_blank" rel="noopener" class="canal reveal s3">
+            <span class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.3-7-11a7 7 0 1 1 14 0c0 4.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <span><span class="lbl">Endereço:<br></span><span class="val small">Vila Velha, Grande Vitória, ES</span></span>
+          </a>
+        </div>
         <!-- CONFIRMAR COM SAMUEL os horários reais de atendimento antes de publicar -->
         <div class="canal reveal s4">
           <span class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>
-          <span><span class="lbl">Horário de atendimento</span><span class="val small">Segunda a sexta, das 8h às 18h. Sábado, das 8h às 12h.</span></span>
+          <span><span class="lbl">Horário de atendimento:<br></span><span class="val small">Segunda a sexta, das 8h às 18h.</span></span>
         </div>
       </div>
       <div class="map-frame reveal s2">
@@ -338,6 +363,7 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
           title="Localização da TH Marmoraria em Vila Velha"
           src="https://www.google.com/maps?q=TH+Marmoraria+Vila+Velha+ES&output=embed"
           loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <a class="map-link" href="https://www.google.com/maps?sca_esv=bdd6df52b611cc54&output=search&q=th+marmoraria&source=lnms&fbs=ABfTbFVGaQeaqnsRPI5sOMG32Ksz6cz9h3eVUp5ML7qH5WsxvabC1UUZKx25rNd3fIh5KRrezBnJ85Zvw6Q-Pjs-Mu0VIBrYlcDO2x6AIWjap_joP_J27GuWBaiHABLyRBqx_zD2j7I7Mmcl8e2AjNLbHsbhMFY0DYlAdGGcnRulXCqEKV3_mgl7HfJgBB2Pq5RUIfpl01kIrMfGpv60FJ-yfhaxmhUUXw&entry=mc&ved=1t:200715&ictx=111" target="_blank" rel="noopener" aria-label="Ver localização da TH Marmoraria no Google Maps"></a>
       </div>
     </div>
   </div>
