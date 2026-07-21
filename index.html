@@ -192,12 +192,6 @@ nav.menu a:hover::after{width:100%}
 .card-body h3{font-family:"Manrope";font-weight:600;font-size:20px;color:var(--ink);letter-spacing:-.2px}
 .card-body .type{font-size:13.5px;color:var(--ink-soft);font-weight:500;margin-top:3px}
 .card-body .desc{font-size:14px;color:#6b6b66;margin-top:16px;min-height:62px;line-height:1.55}
-.card-body .vermais{
-  margin-top:18px;display:inline-flex;align-items:center;gap:8px;
-  background:var(--forest);color:#fff;padding:11px 22px;border-radius:40px;font-size:13.5px;font-weight:600;
-  transition:.4s var(--ease);
-}
-.card-body .vermais:hover{background:var(--forest-2);gap:13px}
 .catalogo .center-btn{text-align:center;margin-top:56px}
 .btn-pill-sage{background:var(--sage);color:#08120b;padding:15px 38px;border-radius:40px;font-weight:600;display:inline-flex;align-items:center;gap:9px;transition:.4s var(--ease)}
 .btn-pill-sage:hover{background:var(--sage-dark);transform:translateY(-2px);color:#fff}
@@ -206,10 +200,6 @@ nav.menu a:hover::after{width:100%}
 .projetos{background:var(--noir);position:relative}
 .projetos::before{content:"";position:absolute;inset:0;background:radial-gradient(80% 60% at 50% 0%,rgba(184,145,95,.06),transparent 60%);pointer-events:none}
 .proj-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px}
-.proj-arrows{display:flex;gap:12px}
-.proj-arrows button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line-d);background:transparent;color:#fff;cursor:pointer;display:grid;place-items:center;transition:.4s var(--ease)}
-.proj-arrows button:hover{background:var(--sage);color:#08120b;border-color:var(--sage)}
-.proj-arrows svg{width:18px;height:18px}
 .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .proj-card{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:1/1.02;cursor:pointer}
 .proj-img{position:absolute;inset:0;transition:transform 1s var(--ease)}
@@ -316,7 +306,6 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
   .proj-top{justify-content:center}
   .proj-top .sec-head{text-align:center!important;margin-bottom:0!important}
   .proj-top .sec-head .rule{margin-left:auto!important}
-  .proj-arrows{display:none}
   .proj-grid{grid-template-columns:1fr;gap:18px}
   .proj-card{aspect-ratio:16/11}
   .sobre-grid{grid-template-columns:1fr}
@@ -403,7 +392,6 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
           <h3>Mont Blanc</h3>
           <div class="type">Quartzito</div>
           <p class="desc">Branco gelo com veios delicados em cinza e bege. Resistência superior ao granito com a elegância do mármore — bancadas e painéis de destaque.</p>
-          <a href="#" class="vermais">Ver mais →</a>
         </div>
       </article>
 
@@ -413,7 +401,6 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
           <h3>Verde Pantanal</h3>
           <div class="type">Granito</div>
           <p class="desc">Verde profundo com pontos homogêneos e brilhos minerais únicos. Alta resistência ao calor — personalidade marcante para cozinhas e lavabos.</p>
-          <a href="#" class="vermais">Ver mais →</a>
         </div>
       </article>
 
@@ -423,7 +410,6 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
           <h3>Bianco Piacenza</h3>
           <div class="type">Mármore</div>
           <p class="desc">Fundo branco com estampa marmorizada clássica e acabamento acetinado. Elegância atemporal para banheiros e revestimentos sofisticados.</p>
-          <a href="#" class="vermais">Ver mais →</a>
         </div>
       </article>
 
@@ -433,7 +419,6 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
           <h3>Taj Mahal</h3>
           <div class="type">Quartzito</div>
           <p class="desc">Bege-claro com veios dourados sutis e textura sedosa. O queridinho dos projetos assinados — bancadas, lavabos e painéis de alto padrão.</p>
-          <a href="#" class="vermais">Ver mais →</a>
         </div>
       </article>
 
@@ -454,10 +439,6 @@ footer{background:var(--noir);border-top:1px solid var(--line-d);padding:70px 0 
         <h2>Projetos</h2>
         <p>Ambientes contam histórias.</p>
         <div class="rule" style="margin-left:0"></div>
-      </div>
-      <div class="proj-arrows reveal">
-        <button id="projPrev" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
-        <button id="projNext" aria-label="Próximo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>
     </div>
     <div class="proj-grid" id="projGrid">
@@ -594,10 +575,6 @@ const io=new IntersectionObserver((entries)=>{
 },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// projetos arrows (scroll on mobile / subtle nudge on desktop)
-const grid=document.getElementById('projGrid');
-document.getElementById('projNext').onclick=()=>grid.scrollBy({left:grid.clientWidth*.8,behavior:'smooth'});
-document.getElementById('projPrev').onclick=()=>grid.scrollBy({left:-grid.clientWidth*.8,behavior:'smooth'});
 </script>
 </body>
 </html>
